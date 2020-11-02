@@ -1,0 +1,14 @@
+{% extends 'tienda/main.html' %}
+
+
+{% block content %}
+    <h1>Borrar Producto</h1>
+    <p>Seguro que quieres borrar el producto ?</p>
+<form action="" method="POST">
+    {% csrf_token %}
+
+    <input type="submit" action="" value="Si, borrar"/>
+
+</form>
+
+{% endblock %}
