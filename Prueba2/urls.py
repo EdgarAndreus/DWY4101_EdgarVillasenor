@@ -16,10 +16,16 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from django.http import HttpResponse
+from django.conf.urls.static import static
+from django.conf import settings
 
 
 def home(request):
     return HttpResponse('Home Page')
+
+
+def productos(request):
+    return HttpResponse('productos')
 
 
 def contact(request):
@@ -28,7 +34,8 @@ def contact(request):
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', home),
-    path('about/', contact),
-    path('productos/', include('tienda.urls'))
+    path('', include('tienda.urls'))
 ]
+
+
+urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_URL)
