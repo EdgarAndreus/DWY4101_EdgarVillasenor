@@ -4,6 +4,16 @@ import uuid
 
 # Create your models here.
 
+class Cliente(models.Model):
+    nombre = models.CharField(max_length=200)
+    telefono = models.CharField(max_length=200)
+    email = models.CharField(max_length=200)
+    fecha_creacion = models.DateTimeField(auto_now_add=True, null=True)
+
+    def __str__(self):
+        return self.nombre
+
+
 class Producto(models.Model):
     nombre = models.CharField(max_length=200)
     codigo = models.CharField(max_length=200)

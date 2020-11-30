@@ -1,0 +1,48 @@
+{% extends 'tienda/main.html' %}
+{% load static %}
+{% block content %}
+
+	<br>
+
+<div class="row">
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Cliente:</h5>
+			<hr>
+
+			<a class="btn btn-outline-info  btn-sm btn-block" href="{% url 'actualizarCliente' cliente.id %}">Actualizar Cliente</a>
+			<a class="btn btn-outline-danger  btn-sm btn-block" href="{% url 'borrarCliente' cliente.id %}">Borrar Cliente</a>
+
+		</div>
+	</div>
+
+	<div class="col-md">
+		<div class="card card-body">
+			<h5>Informacion de Contacto</h5>
+			<hr>
+			<p>Email: {{ cliente.email }} </p>
+			<p>Telefono: {{ cliente.telefono }}</p>
+		</div>
+	</div>
+
+
+</div>
+
+
+<br>
+<div class="row">
+	<div class="col">
+		<div class="card card-body">
+			<form method="get">
+
+		    <button class="btn btn-primary" type="submit">Buscar</button>
+		  </form>
+		</div>
+	</div>
+
+</div>
+<br>
+
+
+
+{% endblock %}
