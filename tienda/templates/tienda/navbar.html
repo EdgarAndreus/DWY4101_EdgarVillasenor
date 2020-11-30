@@ -1,4 +1,13 @@
 {% load static %}
+
+<style>
+    .hm{
+        font-size: 18px;
+        color: #fff;
+        margin-right: 20px;
+    }
+</style>
+
 <nav class="navbar navbar-expand-lg navbar-dark bg-dark" >
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
           aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,5 +27,8 @@
             </li>
           </ul>
         </div>
+
+        <span class="hm">Hola, {{ request.user }} </span>
+        <span><a class="hm" href="{% url 'logout' %}">Cerrar Sesion</a></span>
       </nav>
 
