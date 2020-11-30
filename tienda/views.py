@@ -1,9 +1,7 @@
 from django.shortcuts import render, redirect
 from .models import *
-from .forms import ClienteForm
-from django.views import generic
-from django.views.generic.edit import CreateView, UpdateView, DeleteView
-from django.urls import reverse_lazy
+from .forms import ClienteForm, CrearUsuarioForm
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
@@ -57,3 +55,17 @@ def borrarCliente(request, pk):
     context = {'item': cliente}
     return render(request, 'tienda/borrar.html', context)
 
+
+def paginaRegistro(request):
+    form = CrearUsuarioForm()
+    if request.method == "POST":
+        form = CrearUsuarioForm(request.POST)
+        if form.is_valid():
+            form.save()
+    context = {'form': form}
+    return render(request, 'tienda/registro.html', context)
+
+
+def paginaLogin(request):
+    context = {}
+    return render(request, 'tienda/login.html', context)
