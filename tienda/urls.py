@@ -15,5 +15,6 @@ urlpatterns = [
     path('borrarCliente/<str:pk>/', views.borrarCliente, name='borrarCliente'),
 
 
+
 ]
 

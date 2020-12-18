@@ -9,6 +9,11 @@ from django.contrib.auth.decorators import login_required
 # Create your views here.
 
 
+def base_layout(request):
+    template = 'tienda/main.html'
+    return render(request, template)
+
+
 @login_required(login_url='login')
 @permitirUsuarios(allowed_roles=['admin', 'usuarios'])
 def home(request):
