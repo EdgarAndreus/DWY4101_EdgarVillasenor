@@ -18,23 +18,21 @@ from django.urls import path, include
 from django.http import HttpResponse
 from django.conf.urls.static import static
 from django.conf import settings
+from rest_framework import routers
+from quick import views
 
+router = routers.DefaultRouter()
+router.register('productos', views.ProductoViewSet)
+router.register('marca', views.MarcaViewSet)
 
-def home(request):
-    return HttpResponse('Home Page')
-
-
-def productos(request):
-    return HttpResponse('productos')
-
-
-def contact(request):
-    return HttpResponse('Contact')
 
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include('tienda.urls'))
+    path('', include('tienda.urls')),
+    path('api/', include(router.urls)),
+    path('api-auth/', include('rest_framework.urls', namespace='rest_framework'))
+
 ]
 
 
