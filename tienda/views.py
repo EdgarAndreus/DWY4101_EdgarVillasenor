@@ -1,16 +1,22 @@
 from django.shortcuts import render, redirect
 from .models import *
+from .decorators import sinIdentificar, permitirUsuarios
 from .forms import ClienteForm, CrearUsuarioForm
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin', 'usuarios'])
 def home(request):
     return render(request, 'tienda/index.html')
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin', 'usuarios'])
 def productos(request):
     producto = Producto.objects.all()
     cliente = Cliente.objects.all()
@@ -18,16 +24,22 @@ def productos(request):
     return render(request, 'tienda/productos.html', context)
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin', 'usuarios'])
 def contacto(request):
     return render(request, 'tienda/contactanos.html')
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin'])
 def cliente(request, pk):
     cliente = Cliente.objects.get(id=pk)
     context = {'cliente': cliente}
     return render(request, 'tienda/Clientes.html', context)
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin'])
 def crearCliente(request):
     form = ClienteForm()
     if request.method == 'POST':
@@ -38,6 +50,9 @@ def crearCliente(request):
     context = {'form': form}
     return render(request, 'tienda/clienteF.html', context)
 
+
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin'])
 def actualizarCliente(request, pk):
     cliente = Cliente.objects.get(id=pk)
     form = ClienteForm(instance=cliente)
@@ -49,6 +64,8 @@ def actualizarCliente(request, pk):
     return render(request, 'tienda/clienteF.html', context)
 
 
+@login_required(login_url='login')
+@permitirUsuarios(allowed_roles=['admin'])
 def borrarCliente(request, pk):
     cliente = Cliente.objects.get(id=pk)
     if request.method == "POST":
@@ -56,19 +73,20 @@ def borrarCliente(request, pk):
     context = {'item': cliente}
     return render(request, 'tienda/borrar.html', context)
 
-
+@sinIdentificar
 def paginaRegistro(request):
     form = CrearUsuarioForm()
     if request.method == "POST":
         form = CrearUsuarioForm(request.POST)
         if form.is_valid():
             form.save()
+            return redirect('login')
     context = {'form': form}
     return render(request, 'tienda/registro.html', context)
 
 
+@sinIdentificar
 def paginaLogin(request):
-
     if request.method == 'POST':
         username = request.POST.get('username')
         password = request.POST.get('password')
